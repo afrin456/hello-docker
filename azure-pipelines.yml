@@ -19,9 +19,7 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
     
-
-- task: Docker@2
+- task: CmdLine@2
   inputs:
-    command: 'build'
-    Dockerfile: '**/Dockerfile'
+    script: 'sudo docker build **/Dockerfile'
   
