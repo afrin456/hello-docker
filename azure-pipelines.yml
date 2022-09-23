@@ -26,4 +26,4 @@ steps:
       cd /home/azureuser/myagent/_work/5/s
       
       sudo docker build . -t spring:latest
-      sudo docker run -p 8080:9080 -t spring:latest -d
+      sudo docker run -d -p 8080:9080 -t spring:latest 
