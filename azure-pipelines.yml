@@ -25,4 +25,4 @@ steps:
     script: |
       cd /home/azureuser/myagent/_work/5/s
       
-      sudo docker build .
+      sudo docker build . -t spring:latest
