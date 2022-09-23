@@ -19,7 +19,10 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
     
+
 - task: CmdLine@2
   inputs:
-    script: 'sudo docker build /home/azureuser/myagent/_work/5/s/Dockerfile'
-  
+    script: |
+      cd /home/azureuser/myagent/_work/5/s
+      
+      sudo docker build .
