@@ -21,5 +21,5 @@ steps:
     
 - task: CmdLine@2
   inputs:
-    script: 'sudo docker build **/Dockerfile'
+    script: 'sudo docker build 5/s/Dockerfile'
   
