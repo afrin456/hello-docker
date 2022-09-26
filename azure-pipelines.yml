@@ -20,7 +20,10 @@ steps:
     goals: 'package'
     
 
-
+- task: Docker@2
+  inputs:
+    containerRegistry: 'docker-registry'
+    command: 'login'
 
 
 - task: Docker@2
