@@ -29,6 +29,6 @@ steps:
   inputs:
     script: |
             cd $(Build.SourcesDirectory)
-            sudo docker build . -t afrin123/spring:latest
-            sudo docker run -d -p 8080:9080 -t afrin123/spring:latest 
+            sudo docker build . -t afrin123/hello-spring:latest
+            sudo docker run -d -p 8080:9080 -t afrin123/hello-spring:latest 
             sudo docker push afrin123/hello-spring:latest
