@@ -20,9 +20,13 @@ steps:
     goals: 'package'
     
 
-- task: CmdLine@2
+
+
+
+- task: Docker@2
   inputs:
-    script: |
-            cd $(Build.SourcesDirectory)
-            sudo docker build . -t spring:latest
-            sudo docker run -d -p 8080:9080 -t spring:latest 
+    containerRegistry: 'docker-registry'
+    repository: 'hello-spring'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
