@@ -32,3 +32,9 @@ steps:
             sudo docker build . -t afrin123/hello-spring:latest
             sudo docker run -d -p 8080:9080 -t afrin123/hello-spring:latest 
             sudo docker push afrin123/hello-spring:latest
+
+- task: KubernetesManifest@0
+  inputs:
+    action: 'deploy'
+    kubernetesServiceConnection: 'aks-test'
+    manifests: '**/hello-spring.yaml'
