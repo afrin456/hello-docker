@@ -23,10 +23,6 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      echo $(Build.SourcesDirectory)
-      echo $(System.DefaultWorkingDirectory)
-      echo $(Build.Repository.LocalPath)
-      cd /home/azureuser/myagent/_work/5/s
-      
-      sudo docker build . -t spring:latest
-      sudo docker run -d -p 8080:9080 -t spring:latest 
+            cd $(Build.SourcesDirectory)
+            sudo docker build . -t spring:latest
+            sudo docker run -d -p 8080:9080 -t spring:latest 
