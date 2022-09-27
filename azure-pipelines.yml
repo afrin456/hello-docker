@@ -20,10 +20,6 @@ steps:
     goals: 'package'
     
 
-- task: Docker@2
-  inputs:
-    containerRegistry: 'docker-registry'
-    command: 'login'
 
 - task: Docker@2
   inputs:
@@ -35,7 +31,7 @@ steps:
     script: |
             cd $(Build.SourcesDirectory)
             sudo docker build . -t hellospring123.azurecr.io/hello-spring:latest
-            sudo docker run -d -p 8080:9080 -t hellospring123.azurecr.io/hello-spring:latest 
+            #sudo docker run -d -p 8080:9080 -t hellospring123.azurecr.io/hello-spring:latest 
             sudo docker push hellospring123.azurecr.io/hello-spring:latest
 
 - task: KubernetesManifest@0
