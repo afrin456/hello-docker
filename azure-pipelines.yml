@@ -33,15 +33,7 @@ steps:
             sudo docker build . -t hellospring123.azurecr.io/hello-spring:latest
             #sudo docker run -d -p 8080:9080 -t hellospring123.azurecr.io/hello-spring:latest 
             sudo docker push hellospring123.azurecr.io/hello-spring:latest
+            helm install hello-spring hello-spring
 
 
 
-- task: HelmDeploy@0
-  inputs:
-    connectionType: 'Kubernetes Service Connection'
-    kubernetesServiceConnection: 'aks-test'
-    command: 'install'
-    chartType: 'FilePath'
-    chartPath: '**/hello-spring'
-    releaseName: 'hello-spring'
-    waitForExecution: false
