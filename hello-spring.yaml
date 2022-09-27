@@ -17,6 +17,6 @@ spec:
   spec:
    containers:
    - name: hworld
-     image: docker.io/afrin123/hello-spring:latest
+     image: hellospring123.azurecr.io/hello-spring:latest
      ports:
      - containerPort: 9080
