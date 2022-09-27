@@ -34,8 +34,14 @@ steps:
             #sudo docker run -d -p 8080:9080 -t hellospring123.azurecr.io/hello-spring:latest 
             sudo docker push hellospring123.azurecr.io/hello-spring:latest
 
-- task: KubernetesManifest@0
+
+
+- task: HelmDeploy@0
   inputs:
-    action: 'deploy'
+    connectionType: 'Kubernetes Service Connection'
     kubernetesServiceConnection: 'aks-test'
-    manifests: '**/hello-spring.yaml'
+    command: 'install'
+    chartType: 'FilePath'
+    chartPath: '**/hello-spring'
+    releaseName: 'hello-spring'
+    waitForExecution: false
