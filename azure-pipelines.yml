@@ -25,13 +25,18 @@ steps:
     containerRegistry: 'docker-registry'
     command: 'login'
 
+- task: Docker@2
+  inputs:
+    containerRegistry: 'acr'
+    command: 'login'
+
 - task: CmdLine@2
   inputs:
     script: |
             cd $(Build.SourcesDirectory)
-            sudo docker build . -t afrin123/hello-spring:latest
-            sudo docker run -d -p 8080:9080 -t afrin123/hello-spring:latest 
-            sudo docker push afrin123/hello-spring:latest
+            sudo docker build . -t hellospring123.azurecr.io/hello-spring:latest
+            sudo docker run -d -p 8080:9080 -t hellospring123.azurecr.io/hello-spring:latest 
+            sudo docker push hellospring123.azurecr.io/hello-spring:latest
 
 - task: KubernetesManifest@0
   inputs:
