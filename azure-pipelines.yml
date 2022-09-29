@@ -33,6 +33,7 @@ steps:
             sudo docker build . -t hellospring123.azurecr.io/hello-spring:latest
             #sudo docker run -d -p 8080:9080 -t hellospring123.azurecr.io/hello-spring:latest 
             sudo docker push hellospring123.azurecr.io/hello-spring:latest
+            az aks get-credentials --resource-group aks-ag-rg --name aks-ag
             helm install hello-spring hello-spring
 
 
