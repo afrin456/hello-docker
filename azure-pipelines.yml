@@ -9,6 +9,7 @@ pool:
 
 stages:
 - stage: Build
+  displayName: Build Maven
   jobs:
   - job: BuildJob
     steps:
@@ -24,8 +25,9 @@ stages:
         goals: 'package'
     
 
-stages:
+
 - stage: ACR
+  displayName: ACR Login
   jobs:
   - job: BuildJob
     steps:
@@ -34,24 +36,27 @@ stages:
         containerRegistry: 'acr'
         command: 'login'
 
-stages:
+
 - stage: Docker
+  displayName: Docker Build
   jobs:
-  - job: Build Docker Image
+  - job: BuildDockerImage
     steps:
     - task: CmdLine@2
       inputs:
         script: |
             cd $(Build.SourcesDirectory)
-            sudo docker build . -t hellospring123.azurecr.io/hello-spring:latest
+            
+            sudo docker build . -t hellospring123.azurecr.io/hello-spring:$(Build.BuildId)
             #sudo docker run -d -p 8080:9080 -t hellospring123.azurecr.io/hello-spring:latest 
-            sudo docker push hellospring123.azurecr.io/hello-spring:latest
+            sudo docker push hellospring123.azurecr.io/hello-spring:$(Build.BuildId)
             
 
-stages:
-- stage: Helm Deployment
+
+- stage: HelmDeployment
+  displayName: DeployHelm
   jobs:
-  - job: Build Docker Image
+  - job: BuildDockerImage
     steps:
     - task: CmdLine@2
       inputs:
