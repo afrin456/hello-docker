@@ -32,7 +32,7 @@ stages:
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'hello-docker-0.0.1-SNAPSHOT'
+        ArtifactName: 'hello-docker'
         publishLocation: 'Container'
 
 
@@ -53,11 +53,23 @@ stages:
   jobs:
   - job: BuildDockerImage
     steps:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'hello-docker'
+        downloadPath: '$(System.ArtifactsDirectory)'
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'hello-docker'
+        targetPath: '$(Pipeline.Workspace)'
     - task: CmdLine@2
       inputs:
         script: |
             cd $(Build.SourcesDirectory)
-            cp ../a/hello-docker-0.0.1-SNAPSHOT.jar hello-docker-0.0.1-SNAPSHOT.jar
+
+            cp $(Pipeline.Workspace)/hello-docker/hello-docker-0.0.1-SNAPSHOT.jar .
             
             sudo docker build . -t hellospring123.azurecr.io/hello-spring:$(Build.BuildId)
             #sudo docker run -d -p 8080:9080 -t hellospring123.azurecr.io/hello-spring:latest 
