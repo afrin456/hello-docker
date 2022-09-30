@@ -7,34 +7,57 @@
 pool:
   name: Default
 
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
+stages:
+- stage: Build
+  jobs:
+  - job: BuildJob
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
     #jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        goals: 'package'
     
 
+stages:
+- stage: ACR
+  jobs:
+  - job: BuildJob
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'acr'
+        command: 'login'
 
-- task: Docker@2
-  inputs:
-    containerRegistry: 'acr'
-    command: 'login'
-
-- task: CmdLine@2
-  inputs:
-    script: |
+stages:
+- stage: Docker
+  jobs:
+  - job: Build Docker Image
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |
             cd $(Build.SourcesDirectory)
             sudo docker build . -t hellospring123.azurecr.io/hello-spring:latest
             #sudo docker run -d -p 8080:9080 -t hellospring123.azurecr.io/hello-spring:latest 
             sudo docker push hellospring123.azurecr.io/hello-spring:latest
+            
+
+stages:
+- stage: Helm Deployment
+  jobs:
+  - job: Build Docker Image
+    steps:
+    - task: CmdLine@2
+      inputs:
+        script: |
+            cd $(Build.SourcesDirectory)
             az aks get-credentials --resource-group aks-ag-rg --name aks-ag
             helm install hello-spring hello-spring
-
 
 
