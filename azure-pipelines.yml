@@ -26,7 +26,7 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
-           cp $(Build.SourcesDirectory)/s/target/hello-docker-0.0.1-SNAPSHOT $(Build.ArtifactStagingDirectory)
+           cp $(Build.SourcesDirectory)/target/hello-docker-0.0.1-SNAPSHOT $(Build.ArtifactStagingDirectory)
     
 
     - task: PublishBuildArtifacts@1
