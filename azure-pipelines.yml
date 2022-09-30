@@ -83,6 +83,6 @@ stages:
         script: |
             cd $(Build.SourcesDirectory)
             az aks get-credentials --resource-group aks-ag-rg --name aks-ag
-            helm install hello-spring hello-spring
+            helm install hello-spring-$(Build.BuildId) hello-spring --set image.tag=$(Build.BuildId)
 
 
