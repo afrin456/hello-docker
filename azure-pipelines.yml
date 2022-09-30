@@ -37,15 +37,6 @@ stages:
 
 
 
-- stage: ACR
-  displayName: ACR Login
-  jobs:
-  - job: BuildJob
-    steps:
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'acr'
-        command: 'login'
 
 
 - stage: Docker
@@ -84,5 +75,7 @@ stages:
             cd $(Build.SourcesDirectory)
             az aks get-credentials --resource-group aks-ag-rg --name aks-ag
             helm install hello-spring-$(Build.BuildId) hello-spring --set image.tag=$(Build.BuildId)
-
+            kubectl get po
+            kubectl get svc
+            kubectl get ingress
 
