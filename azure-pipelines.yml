@@ -23,14 +23,18 @@ stages:
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'package'
+    - task: CmdLine@2
+      inputs:
+        script: |
+           cp $(Build.SourcesDirectory)/s/target/hello-docker-0.0.1-SNAPSHOT $(Build.ArtifactStagingDirectory)
+    
 
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'hello-docker-0.0.1-SNAPSHOT'
         publishLocation: 'Container'
-    
-    
+
 
 
 - stage: ACR
