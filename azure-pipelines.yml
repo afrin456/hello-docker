@@ -23,11 +23,12 @@ stages:
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'package'
-    - task: PublishPipelineArtifact@1
+
+    - task: PublishBuildArtifacts@1
       inputs:
-        targetPath: '$(Pipeline.Workspace)/a'
-        artifact: 'hello-docker-0.0.1-SNAPSHOT'
-        publishLocation: 'pipeline'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'hello-docker-0.0.1-SNAPSHOT'
+        publishLocation: 'Container'
     
     
 
