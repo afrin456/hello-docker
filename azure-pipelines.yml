@@ -52,6 +52,7 @@ stages:
       inputs:
         script: |
             cd $(Build.SourcesDirectory)
+            cp ../a/hello-docker-0.0.1-SNAPSHOT.jar hello-docker-0.0.1-SNAPSHOT.jar
             
             sudo docker build . -t hellospring123.azurecr.io/hello-spring:$(Build.BuildId)
             #sudo docker run -d -p 8080:9080 -t hellospring123.azurecr.io/hello-spring:latest 
